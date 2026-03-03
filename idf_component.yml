@@ -1,4 +1,4 @@
-version: "1.0.0"
+version: "1.0.1"
 description: "Neopixel driver library using RMT, effects included. No dependencies."
 url: "https://github.com/xnaakarux/libNeon"
 license: "MIT"
