@@ -117,18 +117,18 @@ namespace neo {
                                  std::uint32_t resolution_hz,
                                  bool msb_first)
         : chn_seq{chn_seq_},
-          rmt_encoder_cfg{.bit0 = {.duration0 = std::uint32_t(double(t0h.count()) * double(resolution_hz) * 1.e-9),
+          rmt_encoder_cfg{.bit0 = {.duration0 = std::uint16_t(double(t0h.count()) * double(resolution_hz) * 1.e-9),
                                    .level0 = 1,
-                                   .duration1 = std::uint32_t(double(t0l.count()) * double(resolution_hz) * 1.e-9),
+                                   .duration1 = std::uint16_t(double(t0l.count()) * double(resolution_hz) * 1.e-9),
                                    .level1 = 0},
-                          .bit1 = {.duration0 = std::uint32_t(double(t1h.count()) * double(resolution_hz) * 1.e-9),
+                          .bit1 = {.duration0 = std::uint16_t(double(t1h.count()) * double(resolution_hz) * 1.e-9),
                                    .level0 = 1,
-                                   .duration1 = std::uint32_t(double(t1l.count()) * double(resolution_hz) * 1.e-9),
+                                   .duration1 = std::uint16_t(double(t1l.count()) * double(resolution_hz) * 1.e-9),
                                    .level1 = 0},
                           .flags = {.msb_first = msb_first}},
-          rmt_reset_sym{.duration0 = std::uint32_t(double(res.count()) * double(resolution_hz) * 0.5e-9),
+          rmt_reset_sym{.duration0 = std::uint16_t(double(res.count()) * double(resolution_hz) * 0.5e-9),
                         .level0 = 0,
-                        .duration1 = std::uint32_t(double(res.count()) * double(resolution_hz) * 0.5e-9),
+                        .duration1 = std::uint16_t(double(res.count()) * double(resolution_hz) * 0.5e-9),
                         .level1 = 0} {}
 
     constexpr encoding::encoding(encoding_spec spec) : encoding{spec.t0h, spec.t0l, spec.t1h, spec.t1l, spec.chn_seq, spec.res} {}
