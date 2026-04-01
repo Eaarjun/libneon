@@ -3,19 +3,20 @@
 [![Component Registry](https://components.espressif.com/components/eaarjun/libneon/badges)](https://components.espressif.com/components/eaarjun/libneon)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-**libneon** is a lightweight, dependency-free Neopixel (WS2812/WS2812B) driver library for the ESP-IDF framework. It utilizes the ESP32's built-in RMT (Remote Control) peripheral for highly accurate, non-blocking LED signal generation.
+**libneon** is a lightweight, dependency-free Neopixel (WS2812/WS2812B) driver library for ESP-IDF.
+It uses the ESP32's built-in RMT peripheral for accurate, non-blocking LED control.
 
-This library includes built-in visual effects and is designed to be highly efficient, modular, and easy to integrate into your embedded projects.
+It also includes a small animation engine with built-in effects, so you can get something running quickly without writing everything from scratch.
 
 ---
 
 ## ✨ Features
 
-* **Zero Dependencies:** Pure ESP-IDF implementation
-* **Hardware-Driven:** Uses the RMT peripheral to precisely time the Neopixel protocol without blocking the CPU
-* **Built-in Effects:** Includes reusable lighting effects, gradients, and animations
-* **Modular Design:** Clean separation between encoder, effects, and examples
-* **Multi-Target Support:** Compatible with:
+* **Zero Dependencies** – pure ESP-IDF implementation
+* **Hardware-Driven** – precise timing via RMT (no CPU blocking)
+* **Built-in Effects** – gradients, pulse, spinner, composite animations
+* **Modular Design** – clean separation of encoder, effects, and examples
+* **Multi-Target Support:**
 
   * ESP32
   * ESP32-C3
@@ -26,7 +27,7 @@ This library includes built-in visual effects and is designed to be highly effic
 
 ## 📦 Installation
 
-You can easily add this component using the ESP Component Registry:
+Add the component via ESP Component Registry:
 
 ```bash
 idf.py add-dependency "eaarjun/libneon^1.0.2"
@@ -53,16 +54,48 @@ extern "C" void app_main()
 
 ---
 
+## ⚠️ Important (C++ Setup)
+
+ESP-IDF creates a default `test.c`, but **libneon uses C++**.
+
+Rename:
+
+```bash
+main/test.c → main/test.cpp
+```
+
+Then update `main/CMakeLists.txt`:
+
+```cmake
+idf_component_register(
+    SRCS "test.cpp"
+    INCLUDE_DIRS "."
+    REQUIRES libneon
+)
+```
+
+---
+
 ## 🎨 Built-in Examples
 
-The library provides ready-to-use animations:
+You can run animations directly:
+
+```cpp
+#include <neo/examples.hpp>
+
+example_simple_blink(GPIO_NUM_8, 16);
+example_composite(GPIO_NUM_8, 16);
+examples_run_all(GPIO_NUM_8, 16);
+```
+
+### Available animations:
 
 * 🌈 Gradient / Rainbow
 * 💓 Pulse effects
 * 🌀 Spinner effects
 * 🔴 Simple blink
 * 🎨 Static gradients
-* 🔥 Composite animations (multiple effects with transitions)
+* 🔥 Composite animations (with transitions)
 
 ---
 
@@ -72,21 +105,21 @@ The library provides ready-to-use animations:
 FX Engine → Callback → Encoder (RMT) → LED Strip
 ```
 
-* **FX Engine:** Generates animation frames
-* **Alarm:** Drives frame timing (FPS-based)
-* **Encoder:** Converts frames into RMT signals
-* **RMT Peripheral:** Handles precise signal transmission
+* **FX Engine** → generates animation frames
+* **Alarm** → drives updates (FPS-based)
+* **Encoder** → converts frames to RMT signals
+* **RMT Peripheral** → handles precise transmission
 
 ---
 
 ## 📌 Notes
 
-* Ensure correct GPIO selection based on your hardware
-* WS2812 LEDs use **GRB color order**
-* Timing is handled automatically via RMT
+* Make sure the GPIO matches your hardware wiring
+* WS2812 LEDs use **GRB color order** (handled internally)
+* RMT handles all timing automatically
 
 ---
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+MIT License
