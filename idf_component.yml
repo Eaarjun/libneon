@@ -1,11 +1,12 @@
-version: "1.0.1"
+version: "1.0.2"
 description: "Neopixel driver library using RMT, effects included. No dependencies."
-url: "https://github.com/xnaakarux/libNeon"
+url: "https://github.com/Eaarjun/libneon"
 license: "MIT"
 
 targets:
   - esp32
   - esp32c3
+  - esp32c6
   - esp32s3
 
 dependencies:
